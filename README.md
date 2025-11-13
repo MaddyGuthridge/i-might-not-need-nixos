@@ -14,5 +14,12 @@ am currently in the process of writing.
   - [ ] `npm`
   - [ ] Gnome extensions
 - [ ] `home-manager` to configure many apps
+  - [ ] Gnome
+    - [ ] Keyboard shortcuts
+    - [ ] Default apps
+    - [ ] Basic themes
+  - [ ] Git
+  - [ ] Dotfiles
 - [ ] What the f*ck is a flake?
+  - [ ] How do I install one?
   - [ ] Let's make one for UNSW's `dcc` compiler
