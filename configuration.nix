@@ -107,6 +107,7 @@
     packages = with pkgs; [
       # Gnome
       gnome-tweaks
+      gnomeExtensions.launch-new-instance
       # Note-taking
       obsidian
       # Communication
@@ -158,6 +159,7 @@
     usbutils
     git
     hack-font
+    cloudflared
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
