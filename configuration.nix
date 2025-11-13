@@ -108,6 +108,7 @@
       # Gnome
       gnome-tweaks
       gnomeExtensions.launch-new-instance
+      gnomeExtensions.gnomeExtensions.caffeine
       # Note-taking
       obsidian
       # Communication
