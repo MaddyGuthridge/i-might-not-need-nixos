@@ -143,6 +143,9 @@ in
       gnomeExtensions.just-perfection
       gnomeExtensions.rounded-window-corners-reborn
       gnomeExtensions.panel-workspace-scroll
+      gnomeExtensions.middle-click-to-close-in-overview
+      gnomeExtensions.pano
+      wl-clipboard
       # Note-taking
       unstable.obsidian
       libreoffice-qt6-fresh
