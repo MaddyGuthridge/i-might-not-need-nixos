@@ -26,7 +26,17 @@ in
   };
 
   # Bootloader.
-  boot.loader.systemd-boot.enable = true;
+  boot.loader.systemd-boot = {
+    enable = true;
+    configurationLimit = 10;
+    extraEntries = { "Fedora.conf" = ''
+      title Fedora
+      efi /EFI/fedora/grubx64.efi
+      options root=9A09-B0A7 rootfstype=fat32 add_efi_memmap rw
+      sort-key fedora
+    ''; }
+    ;
+  };
   boot.loader.efi.canTouchEfiVariables = true;
   boot.kernelModules = [
     # Required for makemkv to work correctly
@@ -150,6 +160,7 @@ in
       unstable.nushell
       insomnia
       unstable.typst
+      android-tools
       # mise  # I muse resist the temptation
       # JS
       nodejs_20
