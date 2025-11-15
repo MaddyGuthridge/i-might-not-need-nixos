@@ -188,6 +188,10 @@ in
     ];
   };
 
+  # Allow running arbitrary executables
+  # https://nix.dev/guides/faq#how-to-run-non-nix-executables
+  programs.nix-ld.enable = true;
+
   # Install firefox.
   programs.firefox.enable = true;
 
