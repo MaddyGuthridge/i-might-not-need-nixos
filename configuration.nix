@@ -6,10 +6,8 @@
 
 let
   # Add the unstable channel declaratively
-  unstableTarball =
-    fetchTarball
-      "https://github.com/NixOS/nixpkgs/archive/nixos-unstable.tar.gz";
-  
+  unstableTarball = fetchTarball "https://github.com/NixOS/nixpkgs/archive/nixos-unstable.tar.gz";
+
   # https://discourse.nixos.org/t/new-to-nixos-and-cant-play-blu-rays/62560/5
   # https://github.com/NixOS/nixpkgs/issues/75646#issuecomment-1832829819
   libbluray = pkgs.libbluray.override {
@@ -21,31 +19,32 @@ let
   handbrakeBd = pkgs.handbrake.override { inherit libbluray; };
 in
 {
-  imports =
-    [
-      # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-    ];
+  imports = [
+    # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+  ];
 
   nixpkgs.config = {
-    packageOverrides = pkgs: with pkgs; {
+    packageOverrides =
+      pkgs: with pkgs; {
         unstable = import unstableTarball {
-        config = config.nixpkgs.config;
+          config = config.nixpkgs.config;
+        };
       };
-    };
   };
 
   # Bootloader.
   boot.loader.systemd-boot = {
     enable = true;
     configurationLimit = 10;
-    extraEntries = { "Fedora.conf" = ''
-      title Fedora
-      efi /EFI/fedora/grubx64.efi
-      options root=9A09-B0A7 rootfstype=fat32 add_efi_memmap rw
-      sort-key fedora
-    ''; }
-    ;
+    extraEntries = {
+      "Fedora.conf" = ''
+        title Fedora
+        efi /EFI/fedora/grubx64.efi
+        options root=9A09-B0A7 rootfstype=fat32 add_efi_memmap rw
+        sort-key fedora
+      '';
+    };
   };
   boot.loader.efi.canTouchEfiVariables = true;
   boot.kernelModules = [
@@ -132,72 +131,76 @@ in
       # Use Gradle 8.8
       archivePkgs = import (builtins.fetchTarball {
         url = "https://github.com/NixOS/nixpkgs/archive/d9f258945d3532e399d7f73fcd9b6fa5b4393e01.tar.gz";
-      }) {};
+      }) { };
       gradle_8_8 = archivePkgs.gradle_8;
     in
-  {
-    isNormalUser = true;
-    description = "Maddy Guthridge";
-    extraGroups = [ "networkmanager" "wheel" ];
-    packages = with pkgs; [
-      # Gnome
-      gnome-tweaks
-      gnomeExtensions.launch-new-instance
-      gnomeExtensions.caffeine
-      gnomeExtensions.appindicator
-      gnomeExtensions.blur-my-shell
-      gnomeExtensions.pip-on-top
-      gnomeExtensions.gsconnect
-      gnomeExtensions.hide-minimized
-      gnomeExtensions.lock-keys
-      gnomeExtensions.just-perfection
-      gnomeExtensions.rounded-window-corners-reborn
-      gnomeExtensions.panel-workspace-scroll
-      gnomeExtensions.middle-click-to-close-in-overview
-      gnomeExtensions.pano
-      wl-clipboard
-      # Note-taking
-      unstable.obsidian
-      libreoffice-qt6-fresh
-      # Communication
-      unstable.thunderbird
-      unstable.teams-for-linux
-      unstable.discord
-      slack
-      zoom-us
-      signal-desktop
-      # Programming
-      ghostty
-      unstable.vscode
-      unstable.zed-editor
-      unstable.nushell
-      insomnia
-      unstable.typst
-      android-tools
-      # mise  # I muse resist the temptation
-      # JS
-      nodejs_20
-      unstable.bun
-      # Python
-      unstable.uv
-      poetry
-      # Java
-      jdk17
-      gradle_8_8
-      # Rust
-      rustup
-      bacon
-      # Nix
-      nixd
-      nil
-      # Media
-      unstable.makemkv
-      vlcBd
-      jellyfin-media-player
-      mkvtoolnix
-      handbrakeBd
-    ];
-  };
+    {
+      isNormalUser = true;
+      description = "Maddy Guthridge";
+      extraGroups = [
+        "networkmanager"
+        "wheel"
+      ];
+      packages = with pkgs; [
+        # Gnome
+        gnome-tweaks
+        gnomeExtensions.launch-new-instance
+        gnomeExtensions.caffeine
+        gnomeExtensions.appindicator
+        gnomeExtensions.blur-my-shell
+        gnomeExtensions.pip-on-top
+        gnomeExtensions.gsconnect
+        gnomeExtensions.hide-minimized
+        gnomeExtensions.lock-keys
+        gnomeExtensions.just-perfection
+        gnomeExtensions.rounded-window-corners-reborn
+        gnomeExtensions.panel-workspace-scroll
+        gnomeExtensions.middle-click-to-close-in-overview
+        gnomeExtensions.pano
+        wl-clipboard
+        # Note-taking
+        unstable.obsidian
+        libreoffice-qt6-fresh
+        # Communication
+        unstable.thunderbird
+        unstable.teams-for-linux
+        unstable.discord
+        slack
+        zoom-us
+        signal-desktop
+        # Programming
+        ghostty
+        unstable.vscode
+        unstable.zed-editor
+        unstable.nushell
+        insomnia
+        unstable.typst
+        android-tools
+        # mise  # I muse resist the temptation
+        # JS
+        nodejs_20
+        unstable.bun
+        # Python
+        unstable.uv
+        poetry
+        # Java
+        jdk17
+        gradle_8_8
+        jdt-language-server
+        # Rust
+        rustup
+        bacon
+        # Nix
+        nil
+        nixfmt-rfc-style
+        # Media
+        unstable.makemkv
+        vlcBd
+        jellyfin-media-player
+        mkvtoolnix
+        handbrakeBd
+      ];
+    };
 
   # Allow running arbitrary executables
   # https://nix.dev/guides/faq#how-to-run-non-nix-executables
