@@ -9,6 +9,16 @@ let
   unstableTarball =
     fetchTarball
       "https://github.com/NixOS/nixpkgs/archive/nixos-unstable.tar.gz";
+  
+  # https://discourse.nixos.org/t/new-to-nixos-and-cant-play-blu-rays/62560/5
+  # https://github.com/NixOS/nixpkgs/issues/75646#issuecomment-1832829819
+  libbluray = pkgs.libbluray.override {
+    withAACS = true;
+    withBDplus = true;
+    withJava = true;
+  };
+  vlcBd = pkgs.vlc.override { inherit libbluray; };
+  handbrakeBd = pkgs.handbrake.override { inherit libbluray; };
 in
 {
   imports =
@@ -150,7 +160,7 @@ in
       unstable.obsidian
       libreoffice-qt6-fresh
       # Communication
-      thunderbird
+      unstable.thunderbird
       unstable.teams-for-linux
       unstable.discord
       slack
@@ -182,9 +192,10 @@ in
       nil
       # Media
       unstable.makemkv
-      vlc
+      vlcBd
       jellyfin-media-player
       mkvtoolnix
+      handbrakeBd
     ];
   };
 
