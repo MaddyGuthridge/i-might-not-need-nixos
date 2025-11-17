@@ -2,12 +2,9 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
+{ config, pkgs, unstablePkgs, ... }:
 
 let
-  # Add the unstable channel declaratively
-  unstableTarball = fetchTarball "https://github.com/NixOS/nixpkgs/archive/nixos-unstable.tar.gz";
-
   # https://discourse.nixos.org/t/new-to-nixos-and-cant-play-blu-rays/62560/5
   # https://github.com/NixOS/nixpkgs/issues/75646#issuecomment-1832829819
   libbluray = pkgs.libbluray.override {
@@ -23,14 +20,6 @@ in
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
   ];
-
-  nixpkgs.config = {
-    packageOverrides = pkgs: {
-      unstable = import unstableTarball {
-        config = config.nixpkgs.config;
-      };
-    };
-  };
 
   nix.settings.experimental-features = [
     "nix-command"
@@ -131,13 +120,6 @@ in
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.maddy =
-    let
-      # Use Gradle 8.8
-      archivePkgs = import (builtins.fetchTarball {
-        url = "https://github.com/NixOS/nixpkgs/archive/d9f258945d3532e399d7f73fcd9b6fa5b4393e01.tar.gz";
-      }) { };
-      gradle_8_8 = archivePkgs.gradle_8;
-    in
     {
       isNormalUser = true;
       description = "Maddy Guthridge";
@@ -164,42 +146,42 @@ in
         gnomeExtensions.pano
         wl-clipboard
         # Note-taking
-        unstable.obsidian
+        unstablePkgs.obsidian
         libreoffice-qt6-fresh
         # Communication
-        unstable.thunderbird
-        unstable.teams-for-linux
-        unstable.discord
+        unstablePkgs.thunderbird
+        unstablePkgs.teams-for-linux
+        unstablePkgs.discord
         slack
         zoom-us
         signal-desktop
         # Programming
         ghostty
-        unstable.vscode
-        unstable.zed-editor
-        unstable.nushell
+        unstablePkgs.vscode
+        unstablePkgs.zed-editor
+        unstablePkgs.nushell
         insomnia
-        unstable.typst
+        unstablePkgs.typst
         android-tools
         # mise  # I muse resist the temptation
         # JS
         nodejs_20
-        unstable.bun
+        unstablePkgs.bun
         # Python
-        unstable.uv
+        unstablePkgs.uv
         poetry
         # Java
         jdk17
-        gradle_8_8
         jdt-language-server
         # Rust
         rustup
         bacon
         # Nix
         nil
+        nixd
         nixfmt-rfc-style
         # Media
-        unstable.makemkv
+        unstablePkgs.makemkv
         vlcBd
         jellyfin-media-player
         mkvtoolnix
@@ -226,7 +208,7 @@ in
     usbutils
     git
     hack-font
-    unstable.cloudflared
+    unstablePkgs.cloudflared
   ];
 
   # Some programs need SUID wrappers, can be configured further or are

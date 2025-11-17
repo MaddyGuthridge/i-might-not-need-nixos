@@ -29,7 +29,7 @@
         pkgs.lib.nixosSystem {
           system = arch;
           modules = [
-            {networking.hostname = hostname;}
+            {networking.hostName = hostname;}
             (./. + "/puters/${hostname}/configuration.nix")
             home-manager.nixosModules.home-manager
           ];
