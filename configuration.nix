@@ -5,6 +5,9 @@
 { config, pkgs, ... }:
 
 let
+  # Home manager
+  home-manager = builtins.fetchTarball "https://github.com/nix-community/home-manager/archive/release-25.05.tar.gz";
+
   # Add the unstable channel declaratively
   unstableTarball = fetchTarball "https://github.com/NixOS/nixpkgs/archive/nixos-unstable.tar.gz";
 
@@ -22,16 +25,22 @@ in
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
+    # Home manager
+    (import "${home-manager}/nixos")
   ];
 
   nixpkgs.config = {
-    packageOverrides =
-      pkgs: with pkgs; {
-        unstable = import unstableTarball {
-          config = config.nixpkgs.config;
-        };
+    packageOverrides = pkgs: {
+      unstable = import unstableTarball {
+        config = config.nixpkgs.config;
       };
+    };
   };
+
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
 
   # Bootloader.
   boot.loader.systemd-boot = {
@@ -141,6 +150,7 @@ in
         "networkmanager"
         "wheel"
       ];
+
       packages = with pkgs; [
         # Gnome
         gnome-tweaks
