@@ -22,24 +22,32 @@
       puter =
         {
           pkgs,
-          unstablePkgs,
+          nixpkgs-unstable,
           hostname,
           arch,
         }:
+        let
+          unstablePkgs = import nixpkgs-unstable {
+            system = arch;
+            # https://discourse.nixos.org/t/allow-unfree-in-flakes/29904/2
+            config.allowUnfree = true;
+          };
+        in
         pkgs.lib.nixosSystem {
           system = arch;
           modules = [
-            {networking.hostName = hostname;}
+            { networking.hostName = hostname; }
             (./. + "/puters/${hostname}/configuration.nix")
             home-manager.nixosModules.home-manager
           ];
+          specialArgs = { inherit unstablePkgs; };
         };
     in
     {
       nixosConfigurations = {
         kronk = puter {
           pkgs = nixpkgs;
-          unstablePkgs = nixpkgs-unstable;
+          nixpkgs-unstable = nixpkgs-unstable;
           hostname = "kronk";
           arch = "x86_64-linux";
         };

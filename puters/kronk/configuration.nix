@@ -5,15 +5,6 @@
 { config, pkgs, unstablePkgs, ... }:
 
 let
-  # https://discourse.nixos.org/t/new-to-nixos-and-cant-play-blu-rays/62560/5
-  # https://github.com/NixOS/nixpkgs/issues/75646#issuecomment-1832829819
-  libbluray = pkgs.libbluray.override {
-    withAACS = true;
-    withBDplus = true;
-    withJava = true;
-  };
-  vlcBd = pkgs.vlc.override { inherit libbluray; };
-  handbrakeBd = pkgs.handbrake.override { inherit libbluray; };
 in
 {
   imports = [
