@@ -13,6 +13,6 @@
       ...
     }:
     {
-      packages.x86_64-linux.gradle = nixpkgs.legacyPackages.x86_64-linux.hello;
+      packages.x86_64-linux.gradle = nixpkgs.legacyPackages.x86_64-linux.gradle_8;
     };
 }
