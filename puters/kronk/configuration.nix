@@ -5,9 +5,6 @@
 { config, pkgs, ... }:
 
 let
-  # Home manager
-  home-manager = builtins.fetchTarball "https://github.com/nix-community/home-manager/archive/release-25.05.tar.gz";
-
   # Add the unstable channel declaratively
   unstableTarball = fetchTarball "https://github.com/NixOS/nixpkgs/archive/nixos-unstable.tar.gz";
 
@@ -25,8 +22,6 @@ in
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
-    # Home manager
-    (import "${home-manager}/nixos")
   ];
 
   nixpkgs.config = {
