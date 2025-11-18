@@ -4,5 +4,6 @@
     gcc
     clang
     clang-tools
+    libxcrypt
   ];
 }
