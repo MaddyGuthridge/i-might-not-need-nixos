@@ -3,7 +3,9 @@ name = "sxp_wrapper"
 version = "0.1.0"
 description = "Add your description here"
 requires-python = ">=3.12"
-dependencies = [ ]
+dependencies = [
+ "slides-xp>=0.0.10",
+]
 
 [project.scripts]
 hello = "sxp_wrapper:main"

@@ -1,2 +1,4 @@
+from slides_xp.cli import cli
+
 def main() -> None:
-    print("main")
+    exit(cli())
