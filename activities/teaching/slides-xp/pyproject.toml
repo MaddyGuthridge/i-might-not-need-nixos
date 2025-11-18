@@ -8,7 +8,7 @@ dependencies = [
 ]
 
 [project.scripts]
-sxp = "sxp_wrapper:main"
+nix-sxp = "sxp_wrapper:main"
 
 [build-system]
 requires = ["uv_build>=0.9.0,<0.10.0"]
