@@ -15,10 +15,7 @@ in
     # Include environment configuration
     ./environments/gnome.nix
     # Include activities
-    ./activities/communication.nix
-    ./activities/documents.nix
-    ./activities/media.nix
-    ./activities/programming
+    ./activities
   ];
 
   nixpkgs.config = {
