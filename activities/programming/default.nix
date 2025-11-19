@@ -8,6 +8,7 @@
     ./nix.nix
     ./python.nix
     ./rust.nix
+    ./zsh.nix
   ];
   environment.systemPackages = with pkgs; [
     ghostty
