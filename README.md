@@ -23,4 +23,4 @@ I will also add slides for my talk once I get around to writing it.
   - [ ] Autostart applications
 - [x] What the f*ck is a flake?
   - [x] How do I install one?
-  - [x] Let's make one for UNSW's `dcc` compiler
+  - [x] Let's [make one for UNSW's `dcc` compiler](https://github.com/COMP1511UNSW/dcc/pull/108)
