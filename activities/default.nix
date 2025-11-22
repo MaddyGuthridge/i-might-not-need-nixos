@@ -5,6 +5,7 @@
     ./teaching
     ./communication.nix
     ./documents.nix
+    ./gaming.nix
     ./media.nix
   ];
 }

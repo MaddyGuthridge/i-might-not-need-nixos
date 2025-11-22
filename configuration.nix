@@ -12,6 +12,8 @@ in
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
+    # Include additional hardware settings
+    ./hardware
     # Include environment configuration
     ./environments/gnome.nix
     # Include activities
